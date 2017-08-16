@@ -1,0 +1,295 @@
+﻿<div class="row">
+
+    <div ng-show="error" class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Whoopsie dasies!</strong> <a href="#" class="alert-link"></a> {{error}}
+    </div>
+
+    <div class=" col-md-5 col-xs-12">
+        <div class="row">
+            <div class="panel panel-primary col-xs-12">
+                <div class="panel-heading row">
+                    <div class="row">
+                        <a ng-href="#!/calendar" class="btn btn-primary col-xs-1"><i class="fa fa-arrow-left fa-lg"></i></a>
+                        <h6 class="col-xs-7">{{plandate}}</h6>
+                        <div ng-show="plan.dayPlanId" class="pull-right">
+                            <a ng-click="flagPlanForDelete()"
+                               ng-href="#confirmDeleteDialogue"
+                               data-toggle="modal"
+                               class="btn btn-primary"><i class="fa fa-trash fa-lg"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="row">
+                        <div ng-show="planServiceIsBusy">
+                            <plan-wait-cursor></plan-wait-cursor>
+                        </div>
+                        <div ng-show="!planServiceIsBusy && plan.dayPlanId">
+                            <div plan-view-edit></div>
+                        </div>
+                        <div ng-show="!plan.dayPlanId && !planServiceIsBusy" class="text-center"><span class="text-warning"> No plans here. </span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--*********************      MODALS      *********************-->
+
+
+
+<div class="modal fade" id="unRoutedCreatePlan" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h5>Create a plan?</h5>
+                <span>{{plandate}}</span>
+            </div>
+            <div class="modal-body">
+                <form name="createForm">
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <div class="input-group">
+                            <input ng-model="newPlanName" type="text" class="form-control" placeholder="e.g. Leg day!" required />
+                            <span class="input-group-btn">
+                                <button ng-disabled="createForm.$invalid" ng-click="createPlan(newPlanName, plandate)" data-dismiss="modal" type="button" class="btn btn-success">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-default">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Confirm-Dialogue-->
+<div class="modal fade" id="confirmDeleteDialogue" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h5 class="text-warning">Just chekin.</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <div class="row">
+                            <div class="col-xs-10 col-xs-offset-1">
+                                <h6>{{flaggedItem.name}}</h6>
+                            </div>
+                        </div>
+                        <div class="text-muted">
+                            <span>You wanna get rid of it?</span>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-11 col-xs-offset-1">
+                                <a ng-click="" class="btn btn-sm btn-default col-xs-4" data-dismiss="modal">
+                                    <i class="fa fa-close fa-lg"></i>
+                                </a>
+                                <a ng-click="removeItem(flaggedItem)" class="btn btn-sm btn-default col-xs-4 col-xs-offset-3" data-dismiss="modal">
+                                    <i class="fa fa-trash fa-lg"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Edit Plan Title-->
+<div class="modal fade" id="editName" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h5>Edit plan name</h5>
+            </div>
+            <form name="editName">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">New Name</label>
+                        <div class="input-group">
+                            <input ng-model="name" type="text" class="form-control" placeholder="Enter a new name" required />
+                            <span class="input-group-btn">
+                                <button ng-disabled="editName.$invalid" ng-click="updateName(name)" data-dismiss="modal" type="button" class="btn btn-success">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Excercise Modal-->
+<div class="modal fade" id="excerciseDialogue" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h5>Excercise</h5>
+            </div>
+            <div class="modal-body">
+                <form name="excerciseForm">
+                    <div class="form-group">
+                        <label class="control-label">New name</label>
+                        <input ng-model="excercise.name"
+                               placeholder="e.g. Dumbell Rows"
+                               type="text" class="form-control" 
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="dropdown">
+                            <label class="control-label">Tracking</label>
+
+                            <button class="btn btn-default btn-block" data-toggle="dropdown">
+                                <span ng-bind="excercise.trackingOption"></span> &nbsp;
+                                <i class="fa fa-caret-down fa-lg"></i>
+                            </button>
+
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="o in excerciseOptions">
+                                    <a class="" ng-click="excercise.trackingOption = o" tabindex="-1"><h6>{{o}}</h6></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div ng-show="excercise.trackingOption == excerciseOptions[1]" class="form-group">
+                        <label class="control-label"> Sets </label>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-2">
+                                    <span ng-bind="excercise.targetSets" class="range-slider__value row"></span>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input ng-model="excercise.targetSets"
+                                           class="range-slider__range" type="range" min="2" max="10">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <label class="control-label"> Reps </label>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-2">
+                                    <span ng-bind="excercise.targetReps" class="range-slider__value row"></span>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input ng-model="excercise.targetReps"
+                                           class="range-slider__range" type="range" min="2" max="20">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="excercise.trackingOption == excerciseOptions[2]" class="form-group">
+                        <label class="control-label"> Duration </label>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-2">
+                                    <span ng-bind="excercise.duration" class="range-slider__value row"></span>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input ng-model="excercise.duration"
+                                           class="range-slider__range" type="range" step="5" min="5" max="60">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button ng-click="resetModels()" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button ng-disabled="excerciseForm.$invalid" ng-click="submitExcercise(excercise)" type="button" data-dismiss="modal" class="btn btn-success"> Save </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Meal Modal-->
+<div class="modal fade" id="mealDialogue" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h5>Edit meal</h5>
+            </div>
+            <div class="modal-body">
+                <form name="mealForm">
+                    <div class="form-group">
+                        <label class="control-label">New name</label>
+                        <input ng-model="meal.name"
+                               placeholder="e.g. Chicken & Rice"
+                               type="text" class="form-control" 
+                               required />
+                    </div>
+                    <div class="form-group">
+                        <div class="dropdown">
+
+                            <label class="control-label"> Tracking </label>
+                            <button class="btn btn-default btn-block" data-toggle="dropdown">
+                                <span ng-bind="meal.mealOption"></span> &nbsp;
+                                <i class="fa fa-caret-down"></i>
+                            </button>
+
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="o in mealOptions">
+                                    <a ng-click="meal.mealOption = o" tabindex="-1"><h6>{{o}}</h6></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div ng-show="meal.mealOption" class="form-group">
+                        <label class="control-label"> Calories </label>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="col-xs-2">
+                                    <span ng-bind="meal.calories" class="range-slider__value row"></span>
+                                </div>
+                                <div class="col-xs-10">
+                                    <input ng-model="meal.calories"
+                                           class="range-slider__range" type="range"
+                                           min="50" step="50" max="1000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="resetModel()" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button ng-disabled="mealForm.$invalid" ng-click="submitMeal(meal)" type="button" data-dismiss="modal" class="btn btn-success">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,16 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <li>
+        <a asp-controller="App" asp-action="WorkoutPlanner">My Planner</a>
+    </li>
+    <li>
+        <form method="post" asp-controller="Account" asp-action="Logout" asp-antiforgery="true">
+            <button class="btn btn-default btn-xs col-md-12 col-xs-4" type="submit">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+    <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+}

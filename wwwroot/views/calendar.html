@@ -1,0 +1,113 @@
+﻿<!-- ng calendar view   main.html-->
+<div class="row">
+    <div ng-show="error" class="alert alert-dismissible alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Oh snap! {{error}}</strong>
+    </div>
+    <div ng-show="calendarIsBusy">
+        <main-wait-cursor display-when="isBusy"></main-wait-cursor>
+    </div>
+    <table ng-show="!calendarIsBusy" class="table-bordered col-xs-12">
+        <thead>
+        <tr>
+            <th id="cal-head" colspan="7" class="text-center table-header-left">
+                <div class="col-xs-12">
+                    <a ng-click="decrementMonth()" class="btn btn-primary col-xs-2 col-md-1"><i class="fa fa-chevron-left"></i></a>
+                    <h3 class="col-xs-3">{{calendar.monthName}}</h3>
+                    <a ng-click="incrementMonth()" class="btn btn-primary col-xs-2 col-md-1"><i class="fa fa-chevron-right"></i></a>
+                    <a href="#" class="btn btn-primary col-xs-1 col-md-1 pull-right"><i class="fa fa-gear fa-chevron-down"></i></a>
+                </div>
+            </th>
+        </tr>
+        <tr id="cal-subhead">
+            <th class="text-center">Sun</th>
+            <th class="text-center">Mon</th>
+            <th class="text-center">Tue</th>
+            <th class="text-center">Wed</th>
+            <th class="text-center">Thu</th>
+            <th class="text-center">Fri</th>
+            <th class="text-center">Sat</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="item in calendar.weeks">
+            <td ng-model="item.sunday"
+                ng-click="goToPlan(item.sunday)">
+
+                <calendar-block summary-for="item.sunday">
+                </calendar-block>
+            </td>
+            <td ng-model="item.monday"
+                ng-click="goToPlan(item.monday)">
+
+                <calendar-block summary-for="item.monday">
+                </calendar-block>
+            </td>
+            <td ng-model="item.tuesday"
+                ng-click="goToPlan(item.tuesday)">
+                <calendar-block summary-for="item.tuesday">
+                </calendar-block>
+            </td>
+            <td ng-model="item.wednesday"
+                ng-click="goToPlan(item.wednesday)">
+
+                <calendar-block summary-for="item.wednesday">
+                </calendar-block>
+            </td>
+            <td ng-model="item.thursday"
+                ng-click="goToPlan(item.thursday)">
+
+                <calendar-block summary-for="item.thursday">
+                </calendar-block>
+            </td>
+            <td ng-model="item.friday"
+                ng-click="goToPlan(item.friday)">
+
+                <calendar-block summary-for="item.friday">
+                </calendar-block>
+            </td>
+            <td ng-model="item.saturday"
+                ng-click="goToPlan(item.saturday)">
+                <calendar-block summary-for="item.saturday">
+                </calendar-block>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<!--Create Plan Modal-->
+
+<div class="modal fade" id="createPlan" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h5>Create a plan?</h5>
+                <span>{{selectedCalendarItem.fullDate}}</span>
+            </div>
+            <div class="modal-body">
+                <form name="newPlan">
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <div class="input-group">
+                            <input ng-model="newName" type="text" class="form-control" placeholder="e.g. Leg day!" required />
+                            <span class="input-group-btn">
+                                <button ng-disabled="newPlan.$invalid" ng-click="createNewPlan(newName)" data-dismiss="modal" type="button" class="btn btn-success">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-default">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

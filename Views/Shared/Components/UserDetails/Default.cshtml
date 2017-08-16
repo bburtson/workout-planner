@@ -1,0 +1,8 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    @User.Identity.Name.ParseFromEmail()
+}
+else
+{
+   <span>Hello, Guest</span>
+}

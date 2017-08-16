@@ -1,0 +1,12 @@
+﻿<!--    scope: {    block: "=summaryFor"    }    -->
+
+
+<div id="cal-item" ng-class="block.isToday ? 'today':''">
+    
+        <b>{{block.day}}</b><br /><br />
+
+        <div class="text-center">
+            <i ng-show="block.dayPlan.dayPlanId" class="fa fa-flag fa-2x text-info"></i>
+        </div>
+    
+</div>

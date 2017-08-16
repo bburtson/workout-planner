@@ -1,0 +1,26 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <h4>
+                    {{plan.name}}
+                    <small class="pull-right">
+                        <a id="anim-component"
+                           href="#editName"
+                           data-toggle="modal"
+                           class="text-muted">
+                            <span> <i class="fa fa-edit fa-lg"></i></span>
+                        </a>
+                    </small>
+                </h4>
+            </div>
+        </div>
+
+        <hr />
+        <div class="form-group">
+
+            <list-component view-ids="editIds" sc-attr="this"></list-component>
+
+        </div>
+    </div>
+</div>
