@@ -1,0 +1,118 @@
+﻿<div class="row">
+    <div id="accordion" class="panel-group">
+        <div class="panel panel-default">
+            <div id="plan-panel" class="panel-heading">
+                <div class="row">
+                    <a href="#first"
+                       data-toggle="collapse"
+                       data-parent="#accordion">
+                        <div class="fill-div">
+                            <h6 class="col-xs-4"> Excercises  </h6>
+
+                        </div>
+                        <div class="fill-div text-right">
+                            <i class="btn fa fa-chevron-down text-muted"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel-collapse collapse in" id="first">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="list-group">
+
+                            <div ng-repeat="ex in sc.plan.excercises" class="list-group-item">
+                                <div class="row">
+                                    <div ng-href="#excerciseDialogue" data-toggle="modal"
+                                         ng-click="sc.setExcerciseFormData(ex)" class="hand">
+
+                                        <div class="col-xs-8"> <strong class="text-primary">{{ex.name}} </strong></div>
+                                        <div class="col-xs-4 text-right"> <small>{{ex.trackingOption}}</small></div>
+                                        <br />
+                                        <br />
+                                        <div class="col-xs-10">
+                                            <span ng-show="ex.trackingOption == 'Repetitions'"> {{ex.targetSets}} Sets  of {{ex.targetReps}} reps. You got this.</span>
+                                            <span ng-show="ex.trackingOption == 'Timed'"> Getting saucy for {{ex.duration}} minutes</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <a ng-click="sc.flagExcerciseForDelete($index)"
+                                           ng-href="#confirmDeleteDialogue"
+                                           data-toggle="modal"
+                                           class="pull-right">
+                                            <i class="fa fa-minus-circle fa-lg text-muted"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-xs-12 text-right">
+                            <span ng-href="#excerciseDialogue" data-toggle="modal">
+                                <i ng-click="sc.setExcerciseFormData()" class="fa fa-plus-circle text-success fa-3x"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="panel panel-default">
+            <div id="plan-panel" class="panel-heading">
+                <div class="row">
+                    <a ng-href="#second"
+                       data-toggle="collapse"
+                       data-parent="#accordion">
+                        <div class="fill-div">
+                            <h6 class="col-xs-4"> Meals </h6>
+                        </div>
+                        <div class="fill-div text-right"><i class="btn fa fa-chevron-down text-muted"></i></div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="panel-collapse collapse in" id="second">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="list-group">
+                            <div ng-repeat="m in sc.plan.meals" class="list-group-item">
+                                <div class="row">
+                                    <div ng-href="#mealDialogue" data-toggle="modal"
+                                         ng-click="sc.setMealFormData(m)" class="hand">
+
+                                        <div class="col-xs-8"> <strong class="text-primary">{{m.name}} </strong></div>
+                                        <div class="col-xs-4 text-right"> <small>{{m.mealOption}}</small></div>
+                                        <br />
+                                        <br />
+                                        <div class="col-xs-10">
+                                            <span> {{m.calories}} calories.</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+
+                                        <a ng-click="sc.flagMealForDelete($index)"
+                                           ng-href="#confirmDeleteDialogue"
+                                           data-toggle="modal"
+                                           class="pull-right">
+                                            <i class="fa fa-minus-circle fa-lg text-muted"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                            <div class="col-xs-12 text-right">
+                                <span ng-href="#mealDialogue" data-toggle="modal">
+                                    <i ng-click="sc.setMealFormData()" class="fa fa-plus-circle text-success fa-3x"></i>
+                                </span>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

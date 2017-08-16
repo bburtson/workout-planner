@@ -1,0 +1,44 @@
+﻿@model LoginVIewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="row">
+    <div class="col-md-offset-3 col-md-5">
+        <div class="well well-lg">
+            <form method="post" asp-antiforgery="true">
+                <fieldset>
+                    <legend>Login</legend>
+                    <div asp-validation-summary="ModelOnly"></div>
+
+                    <div class="form-group">
+
+                        <label asp-for="Username" class=""> </label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"> </label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RememberMe"> </label>
+                        <input class="checkbox-inline" asp-for="RememberMe" />
+                        <span asp-validation-for="RememberMe"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <a class="btn btn-default" asp-controller="App" asp-action="Index">Cancel</a>
+                        <input class="btn btn-success" type="submit" value="Login" />
+                    </div>
+                </fieldset>
+                <div class="text-right">
+                    <h6 class="text-muted">No account?</h6>
+                    Get one <a asp-action="Register">here</a>.
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
